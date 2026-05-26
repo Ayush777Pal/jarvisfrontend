@@ -1,0 +1,358 @@
+.app {
+  width: 100%;
+  min-height: 100vh;
+  background: #000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  font-family: "Courier New", monospace;
+}
+
+/* HUD */
+
+.hud-corner {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  border-color: rgba(0, 200, 255, 0.35);
+  border-style: solid;
+  pointer-events: none;
+}
+
+.tl {
+  top: 16px;
+  left: 16px;
+  border-width: 1.5px 0 0 1.5px;
+}
+
+.tr {
+  top: 16px;
+  right: 16px;
+  border-width: 1.5px 1.5px 0 0;
+}
+
+.bl {
+  bottom: 16px;
+  left: 16px;
+  border-width: 0 0 1.5px 1.5px;
+}
+
+.br {
+  bottom: 16px;
+  right: 16px;
+  border-width: 0 1.5px 1.5px 0;
+}
+
+.hud-text {
+  position: absolute;
+  color: rgba(0, 200, 255, 0.4);
+  font-size: 9px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.top-left {
+  top: 20px;
+  left: 60px;
+}
+
+.top-right {
+  top: 20px;
+  right: 60px;
+}
+
+.bottom-left {
+  bottom: 20px;
+  left: 60px;
+}
+
+.bottom-right {
+  bottom: 20px;
+  right: 60px;
+}
+
+/* Scan */
+
+.scan-line {
+  position: absolute;
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(0, 200, 255, 0.3),
+    transparent
+  );
+  animation: scan 5s linear infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Ball */
+
+.ball-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 10;
+}
+
+.ball {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 35% 32%,
+    #1af0ff 0%,
+    #0099cc 30%,
+    #003355 70%,
+    #000d1a 100%
+  );
+  border: 1.5px solid rgba(0, 200, 255, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: box-shadow 0.3s ease;
+  box-shadow:
+    0 0 20px rgba(0, 200, 255, 0.3),
+    0 0 40px rgba(0, 200, 255, 0.1);
+}
+
+.ball-speaking {
+  animation: speak-bounce 0.4s ease-in-out infinite alternate;
+}
+
+.ball-listening {
+  animation: listening-pulse 1.2s ease-in-out infinite alternate;
+}
+
+.ball-inner {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  border: 0.5px solid rgba(0, 200, 255, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: inner-pulse 3s ease-in-out infinite;
+}
+
+.ball-core {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #00e5ff;
+  box-shadow:
+    0 0 14px #00e5ff,
+    0 0 28px rgba(0, 200, 255, 0.5);
+  animation: core-glow 2s ease-in-out infinite;
+}
+
+.ball-core-speaking {
+  animation: core-speak 0.3s ease-in-out infinite alternate;
+}
+
+/* Orbit */
+
+.orbit-ring {
+  position: absolute;
+  border-radius: 50%;
+  animation: orbit-spin linear infinite;
+  pointer-events: none;
+}
+
+.reverse {
+  animation-direction: reverse;
+}
+
+.orbit-dot {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  top: -3px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* Sonar / Listening Rings */
+
+.sonar-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 200, 255, 0.6);
+  animation: sonar-expand 2s ease-out infinite;
+  pointer-events: none;
+}
+
+.sonar-ring-1 {
+  width: 100px;
+  height: 100px;
+  animation-delay: 0s;
+}
+
+.sonar-ring-2 {
+  width: 100px;
+  height: 100px;
+  animation-delay: 0.55s;
+}
+
+.sonar-ring-3 {
+  width: 100px;
+  height: 100px;
+  animation-delay: 1.1s;
+}
+
+/* Wave */
+
+.wave-bars {
+  position: absolute;
+  bottom: -40px;
+  display: flex;
+  gap: 4px;
+  align-items: flex-end;
+  height: 28px;
+}
+
+.wave-bar {
+  width: 3px;
+  background: #00c8ff;
+  border-radius: 2px;
+  min-height: 3px;
+  animation: wave 0.5s ease-in-out infinite alternate;
+}
+
+/* Status */
+
+.status-text {
+  margin-top: 60px;
+  color: rgba(0, 200, 255, 0.6);
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  text-align: center;
+  min-height: 18px;
+  transition: opacity 0.4s;
+}
+
+/* Chat */
+
+.chat-panel {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 8, 16, 0.97);
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  transition: opacity 0.4s ease;
+}
+
+.chat-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 0.5px solid rgba(0, 200, 255, 0.2);
+}
+
+.chat-title {
+  color: #00c8ff;
+  font-size: 13px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+}
+
+.close-btn {
+  background: none;
+  border: 0.5px solid rgba(0, 200, 255, 0.3);
+  color: rgba(0, 200, 255, 0.7);
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.input-row {
+  display: flex;
+  gap: 10px;
+  margin-top: auto;
+}
+
+.input {
+  flex: 1;
+  background: rgba(0, 200, 255, 0.05);
+  border: 0.5px solid rgba(0, 200, 255, 0.3);
+  border-radius: 4px;
+  color: #00e5ff;
+  font-family: "Courier New", monospace;
+  font-size: 13px;
+  padding: 10px 14px;
+  outline: none;
+  caret-color: #00c8ff;
+}
+
+.send-btn {
+  background: rgba(0, 200, 255, 0.1);
+  border: 0.5px solid rgba(0, 200, 255, 0.5);
+  color: #00c8ff;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: "Courier New", monospace;
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+/* Animations */
+
+@keyframes orbit-spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes inner-pulse {
+  0%, 100% { box-shadow: 0 0 10px rgba(0, 200, 255, 0.3) inset; }
+  50%       { box-shadow: 0 0 22px rgba(0, 200, 255, 0.6) inset; }
+}
+
+@keyframes core-glow {
+  0%, 100% { opacity: 0.85; transform: scale(1); }
+  50%       { opacity: 1;    transform: scale(1.1); }
+}
+
+@keyframes speak-bounce {
+  from { transform: scale(1); }
+  to   { transform: scale(1.12); }
+}
+
+@keyframes core-speak {
+  from { transform: scale(1); }
+  to   { transform: scale(1.5); }
+}
+
+@keyframes listening-pulse {
+  from { box-shadow: 0 0 20px rgba(0, 200, 255, 0.3), 0 0 40px rgba(0, 200, 255, 0.1); }
+  to   { box-shadow: 0 0 32px rgba(0, 200, 255, 0.8), 0 0 60px rgba(0, 200, 255, 0.35); }
+}
+
+@keyframes sonar-expand {
+  0%   { transform: scale(1);   opacity: 0.7; }
+  100% { transform: scale(2.8); opacity: 0; }
+}
+
+@keyframes wave {
+  from { height: 3px; }
+  to   { height: 26px; }
+}
+
+@keyframes scan {
+  from { top: 0; }
+  to   { top: 100%; }
+}
