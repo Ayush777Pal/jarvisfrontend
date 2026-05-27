@@ -1,7 +1,8 @@
+import Camera from "./components/Camera";
 import Chat from "./components/Chat";
 
 const App = () => {
-  return <Chat/>
+  return <Camera/>
 }
 
 export default App
