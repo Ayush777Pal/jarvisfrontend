@@ -1,12 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 
-const Camera = () => {
+const Camera = ({onClose, autocapture=false}) => {
 
     const videoRef = useRef(null);
 
     const canvasRef = useRef(null);
 
     const [stream, setStream] = useState(null);
+    const [countdown, setcountdown] = useState(null)
 
     useEffect(() => {
 
@@ -17,6 +18,26 @@ const Camera = () => {
         };
 
     }, []);
+    useEffect(()=>{
+        if (!autocapture) {
+            return;
+        }
+        let count=3;
+        setcountdown(count);
+        const interval = setInterval(()=>{
+            count--;
+            if (count>0) {
+                setcountdown(count);
+            }else{
+                clearInterval(interval);
+                setcountdown("📸");
+                setTimeout(()=>{
+                    captureSelfie();
+                },500)
+            }
+        },1000);
+        return () => clearInterval(interval);
+    },[autocapture]);
 
     const startCamera = async () => {
 
@@ -81,12 +102,35 @@ const Camera = () => {
             `jarvis-selfie-${Date.now()}.png`;
 
         link.click();
+        if (onClose) {
+            setTimeout(() => {
+                onClose();
+            }, 1000);
+        }
     };
 
     return (
 
         <div className="flex flex-col items-center gap-4">
-
+            {
+                countdown && (
+                    <div
+                        style={{
+                            position: "absolute",
+                            top: "50%",
+                            left: "50%",
+                            transform: "translate(-50%, -50%)",
+                            fontSize: "6rem",
+                            color: "#00c8ff",
+                            fontWeight: "bold",
+                            textShadow: "0 0 20px #00c8ff",
+                            zIndex: 1000
+                        }}
+                    >
+                        {countdown}
+                    </div>
+                )
+            } 
             <video
                 ref={videoRef}
                 autoPlay

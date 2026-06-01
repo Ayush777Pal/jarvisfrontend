@@ -6,6 +6,7 @@ import Camera from "./Camera";
 const JarvisChat = () => {
   const [showCamera, setShowCamera] = useState(false);
   const [mode, setMode] = useState("idle");
+  const [autocapture, setautocapture] = useState(false);
   const inputRef = useRef(null);
 
   useEffect(() => {
@@ -77,8 +78,9 @@ const JarvisChat = () => {
       command.includes("take a selfie") ||
       command.includes("open camera")
     ) {
+      setautocapture(true);
       setShowCamera(true);
-      speak("Opening camera Sir");
+      speak("Capturing slefie in three seconds sir");
       return true;
     }
     return false;
@@ -134,7 +136,7 @@ const JarvisChat = () => {
 
       {/* Camera opens as full overlay, onClose returns here */}
       {showCamera && (
-        <Camera onClose={() => setShowCamera(false)} />
+        <Camera autocapture={autocapture} onClose={() =>{setautocapture(false); setShowCamera(false);}} />
       )}
 
       <div className="status-text">
