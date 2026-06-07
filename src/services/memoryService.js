@@ -1,0 +1,28 @@
+import api from "./api";
+
+export const getMemory = async(key) => {
+  return await api.post(
+    "memory/get/",{
+        key
+    }
+  );
+};
+
+export const saveMemory = async(key, value) => {
+  return await api.post(
+    "memory/save/",{
+        key,
+        value
+    }
+  );
+};
+
+export const deleteMemory = async(key) => {
+  return await api.delete(
+    "memory/save/",{
+        key
+    }
+  );
+};
+
+
