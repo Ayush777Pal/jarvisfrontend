@@ -2,6 +2,8 @@ import { useState, useEffect, useRef } from "react";
 import { sendMessage } from "../services/jarvisService";
 import "./Chat.css";
 import Camera from "./Camera";
+import { speak } from "../utils/speech";
+import { handleCommand } from "../utils/commandRouter";
 
 const JarvisChat = () => {
   const [showCamera, setShowCamera] = useState(false);
@@ -27,7 +29,17 @@ const JarvisChat = () => {
 
     recognition.onresult = async (event) => {
       const transcript = event.results[0][0].transcript;
-      const handled = await handleCommand(transcript);
+      const handled = await handleCommand(
+        transcript,
+        {
+          speak:(text)=>
+            speak(text,
+              ()=> setMode("idle")
+            ),
+            setShowCamera,
+            setAutocapture:setautocapture
+        }
+      );
       if (handled) return;
 
       setMode("thinking");
@@ -42,48 +54,6 @@ const JarvisChat = () => {
 
     recognition.onerror = () => setMode("idle");
     recognition.start();
-  };
-
-  const speak = (text) => {
-    speechSynthesis.cancel();
-    const utt = new SpeechSynthesisUtterance(text);
-
-    const trySpeak = () => {
-      const voices = speechSynthesis.getVoices();
-      const preferred = voices.find(
-        (v) =>
-          v.name.includes("David") ||
-          v.name.includes("Daniel") ||
-          v.name.includes("Alex")
-      );
-      if (preferred) utt.voice = preferred;
-      utt.pitch = 0.75;
-      utt.rate = 0.88;
-      utt.volume = 1;
-      utt.onend = () => setMode("idle");
-      speechSynthesis.speak(utt);
-    };
-
-    if (speechSynthesis.getVoices().length === 0) {
-      speechSynthesis.onvoiceschanged = trySpeak;
-    } else {
-      trySpeak();
-    }
-  };
-
-  const handleCommand = async (text) => {
-    const command = text.toLowerCase();
-    if (
-      command.includes("take selfie") ||
-      command.includes("take a selfie") ||
-      command.includes("open camera")
-    ) {
-      setautocapture(true);
-      setShowCamera(true);
-      speak("Capturing slefie in three seconds sir");
-      return true;
-    }
-    return false;
   };
 
   const isSpeaking = mode === "speaking";
