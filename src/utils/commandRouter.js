@@ -1,3 +1,4 @@
+import { processMemroy } from "../services/memoryService";
 import { greetUser } from "./greeting";
 
 export const handleCommand = async (text, actions) =>{
@@ -19,6 +20,20 @@ export const handleCommand = async (text, actions) =>{
         actions.speak(
             "Capturing selfie in three seconds sir"
         )
+        return true;
+    }
+
+    if (command.startsWith(
+        "remember"
+    )) {
+        await processMemroy(
+            text
+        );
+
+        actions.speak(
+            "I will rember that sir. "
+        );
+
         return true;
     }
     return false;

@@ -25,4 +25,11 @@ export const deleteMemory = async(key) => {
   );
 };
 
-
+export const processMemroy = async(text) =>{
+  return await api.post(
+    "memory/process/",
+    {
+      text
+    }
+  );
+};
