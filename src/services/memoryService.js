@@ -33,3 +33,13 @@ export const processMemroy = async(text) =>{
     }
   );
 };
+
+export const forgetMemory = async (
+  text
+) =>{
+  return await api.post(
+    "memory/forget/",{
+      text
+    }
+  );
+};

@@ -1,4 +1,4 @@
-import { processMemroy } from "../services/memoryService";
+import { forgetMemory, processMemroy } from "../services/memoryService";
 import { greetUser } from "./greeting";
 
 export const handleCommand = async (text, actions) =>{
@@ -34,6 +34,14 @@ export const handleCommand = async (text, actions) =>{
             "I will rember that sir. "
         );
 
+        return true;
+    }
+
+    if(command.startsWith("forget")){
+        await forgetMemory(text);
+        actions.speak(
+            "Memory destroyed sir. "
+        );
         return true;
     }
     return false;
