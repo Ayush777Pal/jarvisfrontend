@@ -1,4 +1,4 @@
-import { forgetMemory, processMemroy } from "../services/memoryService";
+import { forgetMemory, processMemroy,callContact } from "../services/memoryService";
 import { greetUser } from "./greeting";
 
 export const handleCommand = async (text, actions) =>{
@@ -41,6 +41,20 @@ export const handleCommand = async (text, actions) =>{
         await forgetMemory(text);
         actions.speak(
             "Memory destroyed sir. "
+        );
+        return true;
+    }
+    if(command.startsWith(
+        "call "
+        ))
+    {
+
+        const data = await callContact(text);
+        
+        window.location.href =`tel:${data.phone_number}`;
+
+        actions.speak(
+        "Opening dialer sir"
         );
         return true;
     }

@@ -43,3 +43,11 @@ export const forgetMemory = async (
     }
   );
 };
+
+export const callContact = async (text)=>{
+  return await api.post(
+    "memory/contact/call/",{
+      text
+    }
+  );
+}
