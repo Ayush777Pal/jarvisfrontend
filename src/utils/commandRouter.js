@@ -1,15 +1,17 @@
 import { forgetMemory, processMemroy,callContact } from "../services/memoryService";
 import { greetUser } from "./greeting";
+import { launcher } from "../services/jarvisService"; 
 
 export const handleCommand = async (text, actions) =>{
     const command = text.toLowerCase();
-
+    //command for greeting
     if (command.includes("hello jarvis")) {
         const greeting = await greetUser();
         actions.speak(greeting);
         return true;
     }
 
+    //command to take selfie
     if (
         command.includes("take selfie") ||
         command.includes("take a selfie")
@@ -23,6 +25,7 @@ export const handleCommand = async (text, actions) =>{
         return true;
     }
 
+    //command for remembering things
     if (command.startsWith(
         "remember"
     )) {
@@ -37,6 +40,7 @@ export const handleCommand = async (text, actions) =>{
         return true;
     }
 
+    //command to forget memory
     if(command.startsWith("forget")){
         await forgetMemory(text);
         actions.speak(
@@ -44,6 +48,8 @@ export const handleCommand = async (text, actions) =>{
         );
         return true;
     }
+
+    //command to call a person
     if(command.startsWith(
         "call "
         ))
@@ -58,5 +64,15 @@ export const handleCommand = async (text, actions) =>{
         );
         return true;
     }
+
+    //command to open aap 
+    if(
+        command.includes("open")
+    ){
+        const app=await launcher(text);
+        actions.speak(`opening ${app}sir`);
+        return true;
+    }
     return false;
+
 };
