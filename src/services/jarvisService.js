@@ -15,7 +15,8 @@ export async function sendMessage(message) {
     }
 }
 
-const APPS = {
+export async function launcher(text) {
+    const APPS = {
     youtube: "https://www.youtube.com",
     github: "https://github.com",
     gmail: "https://mail.google.com",
@@ -26,11 +27,9 @@ const APPS = {
     reddit: "https://reddit.com",
     amazon: "https://amazon.in",
     netflix: "https://netflix.com",
-};
-
-export async function launcher(text) {
+    };
     try {
-        const response = api.post(
+        const response = await api.post(
             "api/extract/",
             {
                 text
