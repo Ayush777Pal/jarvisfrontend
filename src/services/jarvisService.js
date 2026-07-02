@@ -31,12 +31,12 @@ const APPS = {
 export async function launcher(text) {
     try {
         const response = api.post(
-            "api/extract",
+            "api/extract/",
             {
                 text
             }
         )
-        let app = response.data.app;
+        let app = response.app;
         if (APPS[app]) {
             window.open(APPS[app], "_blank");
         } else {
